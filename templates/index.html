@@ -1,0 +1,39 @@
+{%- extends "base.html" -%}
+{# Extends base.html template #}  {#Jinja formatting#}
+
+{% block head %}
+    <title>TaskMaster</title>
+{% endblock %}
+
+{% block content %}
+    <div class="content">
+        <h1 style="text-align: center;">TaskMaster</h1>                                  
+        {% if tasks|length < 1 %}
+            <h4 style="text-align: center;">No tasks available. Create one below!</h4>
+        {% else %}
+            <table>
+                <tr>
+                    <th>Task</th>
+                    <th>Added</th>
+                    <th>Actions</th>
+                </tr>
+                {% for tasks in tasks %}
+                <tr>
+                    <td>{{ tasks.content }}</td>
+                    <td>{{ tasks.date_created }}</td>
+                    <td>
+                        <a href="/delete/{{ tasks.id }}">Delete</a>
+                        <br>
+                        <a href="/update/{{ tasks.id }}">Update</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+
+        <form action="/" method="POST">
+            <input type="text" name="content" id="content" placeholder="Add a new task..." required>
+            <input type="submit" value="Add Task">
+        </form>
+    </div>
+{% endblock %}c
