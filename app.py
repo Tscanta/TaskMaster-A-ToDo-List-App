@@ -5,8 +5,6 @@ from datetime import datetime #importing datetime module
 app = Flask(__name__)  #creating a Flask app
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'  #configuring the database URI
 db = SQLAlchemy(app)  #creating a SQLAlchemy instance
-with app.app_context():
-    db.create_all()
 
 class Todo(db.Model): #defining a model for the Todo table
     id = db.Column(db.Integer, primary_key=True)  #defining the id column as an integer primary key
@@ -15,7 +13,9 @@ class Todo(db.Model): #defining a model for the Todo table
 
     def __repr__(self):  #defining a string representation for the Todo model
         return '<Task %r>' % self.id  #returning a string representation of the task with its id
-
+    
+with app.app_context():
+    db.create_all()
 
 @app.route('/', methods=['GET', 'POST'])  #creating a route for the home page
 def index():
